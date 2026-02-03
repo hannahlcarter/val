@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zach 💖 Will You Be My Valentine?</title>
+
+  <!-- iPhone-friendly scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      touch-action: manipulation; /* better touch response */
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 20px 16px;
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      max-width: 90%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    img {
+      width: 80%;
+      max-width: 220px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 8px;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+      animation: vibrate 1.5s infinite;
+    }
+
+    #noBtn {
+      background-color: #ccc;
+      position: absolute;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      color: #ff4d6d;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* Vibration animation */
+    @keyframes vibrate {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Zach 💘 Will you be my Valentine?</h1>
+
+    <!-- Dachshund -->
+    <img
+      id="dachshundImg"
+      src="dachshund.jpg"
+      alt="Cute dachshund"
+    />
+
+    <br />
+
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙃</button>
+
+    <div class="message" id="message">
+      YAY! Best Valentine ever!
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+    const dachshundImg = document.getElementById("dachshundImg");
+
+    function moveNoButton() {
+      const rect = noBtn.getBoundingClientRect();
+      const maxX = window.innerWidth - rect.width;
+      const maxY = window.innerHeight - rect.height;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    // Desktop: avoid mouse
+    document.addEventListener("mousemove", (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
+      );
+
+      if (distance < 120) {
+        moveNoButton();
+      }
+    });
+
+    // Mobile: avoid touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // YES button action
+    yesBtn.addEventListener("click", () => {
+      message.style.display = "block";
+      yesBtn.disabled = true;
+      yesBtn.style.animation = "none";
+      noBtn.style.display = "none";
+
+      // 🐶 Change dachshund to smiling version
+      dachshundImg.src = "dachshund_smile.jpg";
+      dachshundImg.alt = "Smiling dachshund";
+    });
+  </script>
+</body>
+</html>
